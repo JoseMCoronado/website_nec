@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model="ir.model.fields" id="field_sale_order_addtl_info">
+      <field name="name">x_addtl_info</field>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="field_description">Addittional Info.</field>
+      <field name="ttype">text</field>
+    </record>
+    <record model="ir.model.fields" id="field_sale_order_salesrep">
+      <field name="name">x_user_id</field>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="field_description">Salesperson</field>
+      <field name="relation">res.users</field>
+      <field name="ttype">many2one</field>
+    </record>
+    <record model="ir.model.fields" id="field_sale_order_viewed">
+      <field name="name">x_viewed</field>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="field_description">Viewed</field>
+      <field name="ttype">boolean</field>
+    </record>
+    <record model="ir.model.fields" id="field_sale_order_viewed_tech">
+      <field name="name">x_viewed_tech</field>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="field_description">Viewed (technical)</field>
+      <field name="ttype">boolean</field>
+      <field name="store" eval="False"/>
+      <field name="readonly" eval="True"/>
+      <field name="compute"><![CDATA[for record in self:
+        record['x_viewed'] = True
+        record['x_viewed_tech'] = True
+        ]]></field>
+    </record>
+  </data>
+</openerp>

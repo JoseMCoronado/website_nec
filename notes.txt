@@ -1,0 +1,9 @@
+disable jdc.product_description
+disable bgu.product_location_category
+disable bgu_product_price_visible
+disable bgu.product_desc_100chars
+disable bgu.shopping_cart_price_visibility
+remove hack from 	Continue Shopping Button
+disable bgu.removePaymentInfo_PublicUsers
+disable bgu.checkout_removepayment
+diable 	bgu.confirmation_pricevisibility

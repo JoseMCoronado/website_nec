@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!--eCommerce Related Views-->
+    <record model="ir.ui.view" id="header_mod">
+      <field name="name">x_jdc.header.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.header"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <xpath expr="//a[@href='/shop/cart']" position="replace">
+          <a href="/shop/cart">
+              <i class="fa fa-shopping-cart"/>
+              My Request(s) <sup t-attf-class="my_cart_quantity label label-primary" t-esc="website_sale_order and website_sale_order.cart_quantity or ''"/>
+          </a>
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="product_mod">
+      <field name="name">x_jdc.product.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.product"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//a[@id='add_to_cart']" position="replace">
+            <a id="add_to_cart" class="btn btn-primary btn-lg mt8 js_check_product a-submit" href="#">Add to Request</a>
+          </xpath>
+          <xpath expr="//p[@t-field='product.description_sale']" position="after">
+            <div><b>Internal Reference:</b> <span t-field="product.default_code"/></div>
+          </xpath>
+          <xpath expr="//p[@ t-field='product.description_sale']" position="replace">
+            <p t-field="product.description_sale"/>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="product_price_mod">
+      <field name="name">x_jdc.product_price.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.product_price"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <xpath expr="//b[@class='oe_price']" position="replace"/>
+          <!--<b class="oe_price" style="white-space: nowrap;" t-field="product.price" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;,&quot;display_currency&quot;: &quot;website.currency_id&quot;}"/>-->
+      </field>
+    </record>
+    <record model="ir.ui.view" id="products_description_mod">
+      <field name="name">x_jdc.products_description.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.products_description"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@itemprop='description']" position="replace">
+           <t t-if="product.description_sale">
+               <div itemprop='description' t-esc="(len(product.description_sale)&gt;100) and (product.description_sale[:100] +'...') or product.description_sale"/>
+           </t>
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="wizard_checkout_mod">
+      <field name="name">x_jdc.wizard.checkout.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.wizard_checkout"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <xpath expr="//li[@id='step10']" position="replace">
+              <li t-att-class="step==10 and 'text-primary' or 'text-muted'" id="step10">
+              <t t-if="step&gt;10 and step&lt;50">
+                <a href="/shop/cart" class="text-success">
+                  Request<span class="chevron"/>
+                </a>
+              </t>
+              <t t-if="not (step&gt;10 and step&lt;50)">
+                  Request<span class="chevron"/>
+              </t>
+            </li>
+          </xpath>
+          <xpath expr="//li[@id='step20']" position="replace">
+            <li t-att-class="(step==20 and 'text-primary') or 'text-muted'" id="step20">
+              <t t-if="step&gt;20 and step&lt;50">
+                <a href="/shop/checkout" class="text-success">
+                  <t t-if="not website_sale_order or not website_sale_order.website_order_line or not website_sale_order.only_services">Customer Information<span class="chevron"/></t>
+                </a>
+              </t>
+              <t t-if="not (step&gt;20 and step&lt;50)">
+                  <t t-if="not website_sale_order or not website_sale_order.website_order_line or not website_sale_order.only_services">Customer Information<span class="chevron"/></t>
+              </t>
+            </li>
+          </xpath>
+          <xpath expr="//li[@id='step40']" position="replace">
+            <li t-att-class="(step==40 and 'text-primary') or 'text-muted'" id="step40">
+              Review Request<span class="chevron"/>
+            </li>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="extra_info_option_mod">
+      <field name="name">x_jdc.extra.info.option.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.extra_info_option"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//li[@id='step30']" position="replace">
+            <li t-att-class="(step==30 and 'text-primary') or 'text-muted'" id="step30">
+              <t t-if="step&gt;30 and step&lt;50">
+                <a href="/shop/extra_info" class="text-success">
+                  Addtl. Info<span class="chevron"/>
+                </a>
+              </t>
+              <t t-if="not (step&gt;30 and step&lt;50)">
+                  Addtl. Info<span class="chevron"/>
+              </t>
+            </li>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="cart_mod">
+      <field name="name">x_jdc.cart.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.cart"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//h1[@class='mb32']" position="replace">
+              <h1 class="mb32">Request</h1>
+          </xpath>
+          <xpath expr="//a[@t-if='not optional_products and website_sale_order and website_sale_order.website_order_line']" position="replace">
+            <a t-if="not optional_products and website_sale_order and website_sale_order.website_order_line" class="btn btn-primary pull-right mb32" href="/shop/checkout"><span class="hidden-xs">Process Request</span><span class="visible-xs-inline">Request</span> <span class="fa fa-long-arrow-right"/></a>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="cart_lines_mod">
+      <field name="name">x_jdc.wizard.checkout.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.cart_lines"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//table[@id='cart_products']/thead/tr/th[4]" position="replace"/>
+          <xpath expr="//table[@id='cart_products']//td[@id='td-price']" position="replace"/>
+          <xpath expr="//div[@class='js_cart_lines pull-right'] " position="replace"/>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="continue_shopping_mod">
+      <field name="name">x_jdc.continue.shopping.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.continue_shopping"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//a" position="replace">
+            <a t-attf-href="/shop/category/#{ slug(website_sale_order.website_order_line[-1].product_id.public_categ_ids[0]) }" class="btn btn-default mb32"><span class="fa fa-long-arrow-left"/> <span class="hidden-xs">Continue Shopping</span><span class="visible-xs-inline">Continue</span></a>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="checkout_mod">
+      <field name="name">x_jdc.checkout.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.checkout"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//form[@action='/shop/confirm_order']//h3[@class='page-header mt16']" position="replace">
+            <h3 class="page-header mt16">Customer Information
+                <small groups="base.group_public"> or
+                    <a class="btn btn-primary" t-if="not partner" t-attf-href="/web?redirect=#{ request.httprequest.url }">Sign in</a>
+                </small>
+            </h3>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="extra_info_mod">
+      <field name="name">x_jdc.extra.info.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.extra_info"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//h1" position="replace">
+            <h1 class="mb32">Addittional Information</h1>
+          </xpath>
+          <xpath expr="//form" position="replace">
+            <form class="form-horizontal" method="post">
+              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+              <div class="form-group form-field">
+                <div class="col-sm-10">
+                  <textarea class="form-control" name="x_addtl_info" id="x_addtl_info" placeholder="Please let us know if we need to satisfy any special requirements..."/>
+                </div>
+              </div>
+              <div class="form-group form-field">
+                <div class="col-sm-10">
+                  <label class="control-label" for="x_user_id">
+                      Salesperson
+                  </label>
+                </div>
+                <div class="col-md-7 col-sm-8">
+                  <select class="form-control o_website_form_input" name="x_user_id" required="false">
+                    <option value="6">
+                                  Andy Greenberg
+                              </option>
+                    <option value="7">
+                                  Jim Greenberg
+                              </option>
+                    <option value="8">
+                                  John Greenberg
+                              </option>
+                    <option value="10">
+                                  Marrylen Santiago
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button name="post_values" type="submit" class="btn btn-default">Continue</button>
+                </div>
+              </div>
+            </form>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="payment_mod">
+      <field name="name">x_jdc.payment.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.payment"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <xpath expr="//t[@t-set='additional_title']" position="replace">
+          <t t-set="additional_title">Shop - Submit Request</t>
+        </xpath>
+        <xpath expr="//h1[@class='mb32']" position="replace">
+         <h1 class="mb32">Review</h1>
+        </xpath>
+        <xpath expr="//div[@class='pull-right']" position="replace"/>
+        <xpath expr="//thead/tr/th[1]" position="replace">
+          <th colspan="2">Product</th>
+        </xpath>
+        <xpath expr="//thead/tr/th[2]" position="replace">
+          <th >Quantity</th>
+        </xpath>
+        <xpath expr="//thead/tr/th[3]" position="replace"/>
+        <xpath expr="//span[@t-field='line.price_unit']/.." position="replace"/>
+        <xpath expr="//div[@class='js_payment mb64 row']//h4" position="replace"/>
+        <xpath expr="//div[@class='js_payment mb64 row']//img" position="replace"/>
+        <xpath expr="//div[@class='js_payment mb64 row']//input[@t-att-value='acquirer.id']" position="attributes">
+          <attribute name="style">visibility: hidden;</attribute>
+        </xpath>
+        <xpath expr="//div[@class='js_payment mb64 row']//span[@t-field='acquirer.name']" position="attributes">
+          <attribute name="style">visibility: hidden;</attribute>
+        </xpath>
+        <xpath expr="//div[@class='js_payment mb64 row']//span[@t-if='acquirer.fees_active']" position="attributes">
+          <attribute name="style">visibility: hidden;</attribute>
+        </xpath>
+        <xpath expr="//div[@class='js_payment mb64 row']//div[@t-field='acquirer.pre_msg']" position="attributes">
+          <attribute name="style">visibility: hidden;</attribute>
+        </xpath>
+        <xpath expr="//div[@id='right_column']" position="replace">
+          <div class="col-lg-3 col-lg-offset-1 col-sm-3 text-muted" id="right_column">
+            <h4>Bill To:</h4>
+            <div t-field="order.partner_invoice_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;,&quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;email&quot;]}"/>
+            <div>
+              <a href="/shop/checkout"><span class="fa fa-arrow-right"/> Change Address</a>
+            </div>
+          </div>
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="total_mod">
+      <field name="name">x_jdc.total.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.total"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@id='cart_total']" position="replace">
+           <div id="cart_total" t-if="website_sale_order"/>
+         </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="confirmation_mod">
+      <field name="name">x_jdc.confirmation.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_sale.confirmation"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//div[@id='wrap']" position="replace">
+            <div id="wrap">
+              <div class="container oe_website_sale">
+                <t t-call="website_sale.wizard_checkout">
+                  <t t-set="step" t-value="50"/>
+                </t>
+                <h1 class="mb32">Request <em t-field="order.name"/> Submitted</h1>
+                <div class="row">
+                    <div class="col-md-8">
+                      <div class="thanks_msg">
+                        <h2>Thank you for an inquiry, a sales person will reach out to you very shortly
+                          <a class="btn btn-primary pull-right" href="/shop/print" target="_blank">
+                            <i class="fa fa-print"/> Print
+                          </a>
+                        </h2>
+                      </div>
+                      <div class="oe_cart">
+                          <h3 class="mt32 text-left"><strong>Request Details:</strong></h3>
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th>Products</th>
+                                      <th>Quantity</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr t-foreach="order.order_line" t-as="line">
+                                      <td>
+                                          <div>
+                                              <a t-attf-href="/shop/product/#{ slug(line.product_id.product_tmpl_id) }">
+                                                  <strong t-esc="line.product_id.with_context(display_default_code=False).display_name"/>
+                                              </a>
+                                          </div>
+                                          <div class="text-muted" t-field="line.name"/>
+                                      </td>
+                                      <td>
+                                          <div id="quote_qty">
+                                              <span t-field="line.product_uom_qty"/>
+                                              <span t-field="line.product_uom"/>
+                                          </div>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <div class="clearfix"/>
+                          <div class="oe_structure"/>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1 text-muted">
+                      <h4>Bill To:</h4>
+                      <div t-field="order.partner_invoice_id" t-field-options="{                     &quot;widget&quot;: &quot;contact&quot;,                     &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;email&quot;]                     }"/>
+                    </div>
+                </div>
+              </div>
+              <div class="oe_structure"/>
+            </div>
+      </xpath>
+      </field>
+    </record>
+    <!--Backend Sale Order Form Modification to display x_attl_info-->
+    <record model="ir.ui.view" id="view_order_form_mod">
+      <field name="name">x_jdc.sale.order.form.mod</field>
+      <field name="model">sale.order</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='note']" position="after">
+            <field name="x_addtl_info" class="oe_inline" attrs="{'invisible':[('x_addtl_info','=',False)]}"/>
+          </xpath>
+          <xpath expr="//field[@name='require_payment']" position="after">
+            <field name="x_viewed_tech"/>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="view_quotation_tree_mod">
+      <field name="name">x_jdc.sale.order.tree.mod</field>
+      <field name="model">sale.order</field>
+      <field name="type">tree</field>
+      <field name="inherit_id" ref="sale.view_quotation_tree"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='name']" position="after">
+            <field name="x_viewed"/>
+          </xpath>
+      </field>
+    </record>
+    <!--Online Quotation Views -->
+    <record model="ir.ui.view" id="so_quotation_mod">
+      <field name="name">x_jdc.product.quotation.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_quote.so_quotation"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//div[@class='bs-sidebar']" position="replace">
+            <div class="bs-sidebar">
+                <div class="text-center" t-if="quotation.state in ('draft', 'sent', 'waiting_date')" style="padding: 10px">
+                    <a t-if="order_valid and not quotation.require_payment" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalaccept">
+                        <i class="fa fa-check"/> Agree to terms &amp; conditions
+                    </a>
+                    <a t-if="order_valid and quotation.require_payment" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalaccept">
+                        <i class="fa fa-check"/> Accept &amp; Pay
+                    </a>
+                </div>
+                <div class="text-center" t-if="need_payment or (quotation.state in ('sale') and quotation.require_payment and tx_state != 'done')" style="padding: 10px">
+                    <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalaccept">
+                        <i class="fa fa-check"/> Pay Now
+                    </a>
+                </div>
+                <hr class="mt0 mb0"/>
+                <t t-call="website_quote.navigation_menu"/>
+                <hr class="mt0 mb0"/>
+                <div t-if="order_valid" class="text-center">
+                    <input type="hidden" t-att-value="quotation.validity_date" id="validity_date"/>
+                    <div class="mt8" t-if="days_valid &gt; 0">
+                        <strong>This offer expires in</strong>
+                        <div class="day_counter mt8 mb16">
+                            <i class="fa fa-clock-o"/>
+                            <t t-esc="days_valid"/>
+                            <t t-if="days_valid &gt; 1">
+                                days
+                            </t>
+                            <t t-if="days_valid &lt;= 1">
+                                day
+                            </t>
+                        </div>
+                    </div>
+
+
+                    <div class="text-center mb16" t-if="quotation.amount_undiscounted &gt; quotation.amount_untaxed">
+                        <p class="text-muted mb8">Your advantage:</p>
+                        <t t-if="quotation.amount_untaxed == quotation.amount_total">
+                            <strong t-field="quotation.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;quotation.pricelist_id.currency_id&quot;}"/>
+                            <strong t-field="quotation.amount_undiscounted" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;quotation.pricelist_id.currency_id&quot;}" style="text-decoration: line-through" class="text-danger"/>
+                        </t>
+                        <t t-if="quotation.amount_untaxed != quotation.amount_total">
+                            <strong t-field="quotation.amount_untaxed" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;quotation.pricelist_id.currency_id&quot;}"/>
+                            <strong t-field="quotation.amount_undiscounted" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;quotation.pricelist_id.currency_id&quot;}" style="text-decoration: line-through" class="text-danger"/>
+                            <br/>
+                            (<span t-field="quotation.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;quotation.pricelist_id.currency_id&quot;}"/> Incl. tax)
+                        </t>
+                    </div>
+               </div>
+            </div>
+          </xpath>
+          <xpath expr="//div[@id='quotation_toolbar']/a[@data-target='#modaldecline']" position="replace"/>
+          <xpath expr="//div[@id='quotation_toolbar']/a[@href='#discussion']" position="replace"/>
+          <xpath expr="//div[@id='quotation_toolbar']/a[@data-target='#modalaccept'][1]" position="replace">
+            <a class="btn btn-success" data-toggle="modal" data-target="#modalaccept" t-if="order_valid and not quotation.require_payment">
+                <i class="fa fa-check"/> Agree to above terms &amp;conditions
+            </a>
+          </xpath>
+          <xpath expr="//div[@id='quotation_toolbar']/a[@data-target='#modalaccept'][2]" position="replace">
+            <a class="btn btn-success" data-toggle="modal" data-target="#modalaccept" t-if="order_valid and quotation.require_payment">
+                <i class="fa fa-check"/> Agree to above terms &amp;conditions
+            </a>
+          </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="chatter_mod">
+      <field name="name">x_jdc.chatter.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_quote.chatter"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <xpath expr="//a[@href='#discussion']" position="replace">
+          <a style="visibility: hidden;" class="btn btn-info" type="submit" href="#discussion">
+              <i class="fa fa-comment"/> Feedback
+          </a>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</openerp>
