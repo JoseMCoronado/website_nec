@@ -165,13 +165,16 @@
       <field name="inherit_id" ref="website_sale.checkout"/>
       <field name="priority">99</field>
       <field name="arch" type="xml">
-          <xpath expr="//form[@action='/shop/confirm_order']//h3[@class='page-header mt16']" position="replace">
-            <h3 class="page-header mt16">Customer Information
-                <small groups="base.group_public"> or
-                    <a class="btn btn-primary" t-if="not partner" t-attf-href="/web?redirect=#{ request.httprequest.url }">Sign in</a>
-                </small>
-            </h3>
-          </xpath>
+          <data>
+            <xpath expr="//form[@action='/shop/confirm_order']//h3[@class='page-header mt16']" position="replace">
+              <h3 class="page-header mt16">Customer Information
+                  <small groups="base.group_public"> or
+                      <a class="btn btn-primary" t-if="not partner" t-attf-href="/web?redirect=#{ request.httprequest.url }">Sign in</a>
+                  </small>
+              </h3>
+            </xpath>
+            <xpath expr="//t[@t-call='website_sale.total']/.." position="replace"/>
+          </data>
       </field>
     </record>
     <record model="ir.ui.view" id="extra_info_mod">
@@ -262,7 +265,7 @@
         </xpath>
         <xpath expr="//div[@id='right_column']" position="replace">
           <div class="col-lg-3 col-lg-offset-1 col-sm-3 text-muted" id="right_column">
-            <h4>Bill To:</h4>
+            <h4>Customer Information:</h4>
             <div t-field="order.partner_invoice_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;,&quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;email&quot;]}"/>
             <div>
               <a href="/shop/checkout"><span class="fa fa-arrow-right"/> Change Address</a>
@@ -339,7 +342,7 @@
                       </div>
                     </div>
                     <div class="col-md-3 col-md-offset-1 text-muted">
-                      <h4>Bill To:</h4>
+                      <h4>Customer Information:</h4>
                       <div t-field="order.partner_invoice_id" t-field-options="{                     &quot;widget&quot;: &quot;contact&quot;,                     &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;email&quot;]                     }"/>
                     </div>
                 </div>
