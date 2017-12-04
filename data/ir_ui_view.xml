@@ -185,14 +185,14 @@
       <field name="priority">99</field>
       <field name="arch" type="xml">
           <xpath expr="//h1" position="replace">
-            <h1 class="mb32">Addittional Information</h1>
+            <h1 class="mb32">Additional Information</h1>
           </xpath>
           <xpath expr="//form" position="replace">
             <form class="form-horizontal" method="post">
               <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
               <div class="form-group form-field">
                 <div class="col-sm-10">
-                  <textarea class="form-control" name="x_addtl_info" id="x_addtl_info" placeholder="Please let us know if we need to satisfy any special requirements..."/>
+                  <textarea class="form-control" name="x_addtl_info" id="x_addtl_info" placeholder="Additional Information"/>
                 </div>
               </div>
               <div class="form-group form-field">
@@ -212,9 +212,6 @@
                     <option value="8">
                                   John Greenberg
                               </option>
-                    <option value="10">
-                                  Marrylen Santiago
-                    </option>
                   </select>
                 </div>
               </div>
@@ -303,11 +300,7 @@
                 <div class="row">
                     <div class="col-md-8">
                       <div class="thanks_msg">
-                        <h2>Thank you for an inquiry, a sales person will reach out to you very shortly
-                          <a class="btn btn-primary pull-right" href="/shop/print" target="_blank">
-                            <i class="fa fa-print"/> Print
-                          </a>
-                        </h2>
+                        <h2>Thank you for your inquiry. A sales person will reach out to you very shortly</h2>
                       </div>
                       <div class="oe_cart">
                           <h3 class="mt32 text-left"><strong>Request Details:</strong></h3>

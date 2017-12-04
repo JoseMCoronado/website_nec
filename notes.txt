@@ -1,3 +1,4 @@
+enable 2 step checkout
 disable jdc.product_description
 disable bgu.product_location_category
 disable bgu_product_price_visible
@@ -7,3 +8,27 @@ remove hack from 	Continue Shopping Button
 disable bgu.removePaymentInfo_PublicUsers
 disable bgu.checkout_removepayment
 diable 	bgu.confirmation_pricevisibility
+
+Manual Changes:
+EMAIL TEMPLATE
+Thank you for your order.
+Please click the tab below to review and accept your order.
+We have attached our wire instructions for payment.
+
+Fixed spelling of 'Additional' on the Additional Information page
+Changed the text box placeholder to 'Additional Information'
+Removed Marrelyn Santiago from salesperson drop down
+Removed print button from the website_sale.confirmation page
+Reworked copy on the website_sale.confirmation page
+
+
+Removed PDF and changed text content from quotation email being sent out.
+
+
+Can not make changes to 'Customer Information' (Billing Information) form in Odoo online (not worth an ugly hack). Therefore,
+will not be able to make all fields required & add an industry field.
+
+Questions:
+Will entering the same customer information on a second visit create another customer record?
+It will not create a new customer, if the user is logged in, they will edit their customer information. Only when
+someone is not logged in will it create a customer.
