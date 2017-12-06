@@ -33,6 +33,21 @@
           <xpath expr="//p[@ t-field='product.description_sale']" position="replace">
             <p t-field="product.description_sale"/>
           </xpath>
+          <xpath expr="//form" position="before">
+            <div>
+              <t t-set="display_price_user" t-value="True"/>
+              <t t-set="current_user" t-value="request.env['res.users'].browse(uid)"/>
+              <t t-if="int(current_user.id) == int(%(base.public_user)d) or len(current_user)&lt;1">
+                <t t-set="display_price_user" t-value="False"/>
+              </t>
+            </div>
+            <div t-if="display_price_user == False">
+              <a href="/web/login"><span>Please sign in to submit request.</span></a>
+            </div>
+          </xpath>
+          <xpath expr="//form" position="attributes">
+              <attribute name="t-if">display_price_user</attribute>
+          </xpath>
       </field>
     </record>
     <record model="ir.ui.view" id="product_price_mod">
@@ -373,6 +388,19 @@
           </xpath>
       </field>
     </record>
+    <!--Product Category Views -->
+    <record model="ir.ui.view" id="product_category_form_view_mod">
+      <field name="name">x_jdc.product.category.form.mod</field>
+      <field name="model">product.category</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="product.product_category_form_view"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='type']" position="after">
+            <field name="x_do_not_flush"/>
+          </xpath>
+      </field>
+    </record>
     <!--Online Quotation Views -->
     <record model="ir.ui.view" id="so_quotation_mod">
       <field name="name">x_jdc.product.quotation.mod</field>
@@ -459,6 +487,58 @@
           </a>
         </xpath>
       </field>
+    </record>
+    <record model="ir.actions.server" id="action_open_tax_report">
+      <field name="name">[JDC] Open Sales Tax Report</field>
+      <field name="model_id" ref="website_nec.model_sales_tax_report_wizard"/>
+      <field name="sequence">5</field>
+      <field name="state">code</field>
+      <field name="code"><![CDATA[
+invoice_ids = object.env['account.invoice'].search([('state','in',['open','paid']),('date_invoice','>=',object.x_date_from),('date_invoice','<=',object.x_date_to),('type','in',['out_invoice','out_refund'])])
+action = object.env['report'].get_action(invoice_ids, 'website_nec.report_sale_tax')
+        ]]>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="sales_tax_report_wizard_form">
+        <field name="name">x_jdc.sales.tax.wizard.form</field>
+        <field name="model">x_jdc.sales.tax.report.wizard</field>
+        <field name="inherit_id" eval="False"/>
+        <field name="priority">16</field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="type">form</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+          <form string="Choose your date">
+              <p class="oe_gray">
+                  Choose you desired date range.
+              </p>
+              <group>
+                  <field name="x_date_from"/>
+                  <field name="x_date_to"/>
+              </group>
+              <footer>
+                  <button name="%(action_open_tax_report)d" string="Retrieve Report" type="action" class="btn-primary"/>
+                  <button string="Cancel" class="btn-default" special="cancel"/>
+              </footer>
+          </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_window_open_sales_tax_wizard">
+      <field name="name">Sales Tax Report</field>
+      <field name="res_model">x_jdc.sales.tax.report.wizard</field>
+      <field name="groups_id" eval="[(6, 0, [])]"/>
+      <field name="auto_search" eval="True"/>
+      <field name="context">{}</field>
+      <field name="limit">80</field>
+      <field name="target">new</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">form</field>
+    </record>
+    <record model="ir.ui.menu" id="menu_sales_tax_report_wizard">
+      <field name="name">Sales Tax Report</field>
+      <field name="parent_id" ref="account_reports.account_reports_legal_statements_menu"/>
+      <field name="sequence">11</field>
+      <field name="action" ref="website_nec.action_window_open_sales_tax_wizard"/>
     </record>
   </data>
 </openerp>

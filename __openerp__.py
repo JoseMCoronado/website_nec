@@ -39,11 +39,13 @@ Features:
 -Removed 'Feedback' and 'Reject' buttons on the online quotation
 -Renamed 'Accept' button to 'Accept terms & conditions' on the online quotation
         """,
-    'depends': ['base_import','website_sale','website_quote'],
+    'depends': ['base_import','website_sale','website_quote','sale_ebay','account_accountant'],
     'data': [
+        'data/ir_models.xml',
         'data/ir_model_fields.xml',
         'data/ir_ui_view.xml',
-        'data/ir_actions_server.xml',     
+        'data/ir_ui_qweb.xml',
+        'data/ir_actions_server.xml',
     ],
     'installable': True,
 }

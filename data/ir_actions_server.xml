@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
   <data>
+    <record model="ir.actions.server" id="archive_product_delist">
+      <field name="name">[JDC] Archive product and delist when sold</field>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="sequence">5</field>
+      <field name="condition">object.state == 'sale'</field>
+      <field name="state">code</field>
+      <field name="code"><![CDATA[
+if obj.state in ['sale','done']:
+  for line in obj.order_line:
+    if line.product_id.categ_id.x_do_not_flush != True:
+      if line.product_id.product_tmpl_id.ebay_listing_status == 'Active':
+        line.product_id.product_tmpl_id.end_listing_product_ebay()
+      line.product_id.product_tmpl_id['ebay_use'] = False
+      line.product_id.product_tmpl_id['website_published'] = False
+      line.product_id.product_tmpl_id['active'] = False
+      ]]>
+      </field>
+    </record>
+    <record model="base.action.rule" id="auto_archive_product_delist">
+      <field name="name">[JDC] Archive product and delist when sold</field>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="sequence">2</field>
+      <field name="kind">on_write</field>
+      <field name="server_action_ids" eval="[(6, 0, [ref('archive_product_delist')])]"/>
+    </record>
     <record model="ir.actions.server" id="change_salesperson">
-      <field name="name">[JOS] Assign user_id on change of x_user_id</field>
+      <field name="name">[JDC] Assign user_id on change of x_user_id</field>
       <field name="model_id" ref="sale.model_sale_order"/>
       <field name="sequence">5</field>
       <field name="state">code</field>
@@ -13,7 +38,7 @@ if len(obj.x_user_id) > 0 and len(obj.user_id) == 0:
       </field>
     </record>
     <record model="base.action.rule" id="auto_change_salesperson">
-      <field name="name">[JOS] Assign user_id on change of x_user_id</field>
+      <field name="name">[JDC] Assign user_id on change of x_user_id</field>
       <field name="active" eval="True"/>
       <field name="model_id" ref="sale.model_sale_order"/>
       <field name="sequence" eval="2"/>

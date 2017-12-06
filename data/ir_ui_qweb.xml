@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.ui.view" id="report_sale_tax_document">
+    <field name="name">report_sale_tax_document</field>
+    <field name="type">qweb</field>
+    <field name="model" eval="False"/>
+    <field name="inherit_id" eval="False"/>
+    <field name="priority">16</field>
+    <field name="arch" type="xml">
+      <t t-name="website_nec.report_sale_tax_document">
+          <t t-call="report.external_layout">
+              <div class="page">
+                  <div class="oe_structure"/>
+                  <h2>
+                      <t>
+                          <span>Sales Tax Report</span>
+                      </t>
+                  </h2>
+
+                  <div class="row mt32 mb32" id="informations">
+                      <div class="col-xs-3">
+                          <strong>Report Date:</strong>
+                          <p t-esc="datetime.datetime.now().strftime('%m/%d/%Y')"/>
+                      </div>
+                  </div>
+
+                  <table class="table table-condensed">
+                      <thead>
+                          <tr>
+                              <th>Accounting Date</th>
+                              <th>Amount Due</th>
+                              <th>Name</th>
+                              <th>Tax</th>
+                              <th>Customer</th>
+                              <th>Address</th>
+                              <th>City</th>
+                              <th>State</th>
+                              <th>Invoice Date</th>
+                              <th class="text-right">Tax</th>
+                              <th class="text-right">Total</th>
+                              <th class="text-right">Net Total</th>
+                              <th class="text-right">Total Sales</th>
+                              <th class="text-right">Total Untaxable Sales</th>
+                              <th class="text-right">Total Taxable Sales</th>
+                              <th class="text-right">Total Tax</th>
+                          </tr>
+                     </thead>
+                     <tbody class="sale_tbody">
+                         <t t-set="total_sales" t-value="0"/>
+                         <t t-set="total_untaxable_sales" t-value="0"/>
+                         <t t-set="total_taxable_sales" t-value="0"/>
+                         <t t-set="total_tax" t-value="0"/>
+                         <t t-foreach="docs" t-as="doc">
+                            <tr>
+                                <t t-set="total_sales" t-value="total_sales + doc.amount_total"/>
+                                <t t-if="doc.amount_tax &lt;= 0">
+                                  <t t-set="total_untaxable_sales" t-value="total_untaxable_sales + doc.amount_total"/>
+                                </t>
+                                <t t-if="doc.amount_tax &gt; 0">
+                                  <t t-set="total_taxable_sales" t-value="total_taxable_sales + doc.amount_total"/>
+                                </t>
+                                <t t-set="total_tax" t-value="total_tax + doc.amount_tax"/>
+                                <td><span t-field="doc.date"/></td>
+                                <td><span t-field="doc.residual"/></td>
+                                <td><span t-field="doc.number"/></td>
+                                <t t-if="doc.fiscal_position_id and doc.fiscal_position_id.tax_ids and doc.fiscal_position_id.tax_ids[0].tax_dest_id">
+                                  <td><span t-esc="doc.fiscal_position_id.tax_ids[0].tax_dest_id.name"/></td>
+                                </t>
+                                <t t-if="not doc.fiscal_position_id or not doc.fiscal_position_id.tax_ids">
+                                  <td><span>n/A</span></td>
+                                </t>
+                                <td><span t-field="doc.partner_id.name"/></td>
+                                <td><span t-field="doc.partner_id.street"/></td>
+                                <td><span t-field="doc.partner_id.city"/></td>
+                                <td><span t-field="doc.partner_id.state_id.code"/></td>
+                                <td><span t-field="doc.date_invoice"/></td>
+                                <td class="text-right"><span t-field="doc.amount_tax"/></td>
+                                <td class="text-right"><span t-field="doc.amount_untaxed"/></td>
+                                <td class="text-right"><span t-field="doc.amount_total"/></td>
+                                <td class="text-right"><span t-esc="total_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/></td>
+                                <td class="text-right"><span t-esc="total_untaxable_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/></td>
+                                <td class="text-right"><span t-esc="total_taxable_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/></td>
+                                <td class="text-right"><span t-esc="total_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/></td>
+                            </tr>
+                          </t>
+                      </tbody>
+                  </table>
+                  <div class="oe_structure"/>
+              </div>
+          </t>
+      </t>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="report_sale_tax">
+    <field name="name">report_sale_tax</field>
+    <field name="type">qweb</field>
+    <field name="model" eval="False"/>
+    <field name="inherit_id" eval="False"/>
+    <field name="priority">16</field>
+    <field name="arch" type="xml">
+      <t t-name="website_nec.report_sale_tax">
+          <t t-call="report.html_container">
+            <t t-call="website_nec.report_sale_tax_document" t-lang="docs[0].partner_id.lang"/>
+          </t>
+      </t>
+    </field>
+  </record>
+  <record model="ir.actions.report.xml" id="report_report_sale_tax">
+    <field name="name">Sale Tax Report</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="model">account.invoice</field>
+    <field name="report_name">website_nec.report_sale_tax</field>
+  </record>
+</odoo>

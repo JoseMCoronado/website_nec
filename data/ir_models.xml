@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+    <record model="ir.model" id="model_sales_tax_report_wizard">
+      <field name="info">Sales Tax Report Wizard</field>
+      <field name="model">x_jdc.sales.tax.report.wizard</field>
+      <field name="name">Sales Tax Report Wizard</field>
+      <field name="state">manual</field>
+      <field name="transient" eval="True"/>
+    </record>
+  </data>
+</openerp>

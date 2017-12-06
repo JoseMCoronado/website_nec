@@ -20,6 +20,12 @@
       <field name="field_description">Viewed</field>
       <field name="ttype">boolean</field>
     </record>
+    <record model="ir.model.fields" id="field_product_category_not_flush">
+      <field name="name">x_do_not_flush</field>
+      <field name="model_id" ref="stock.model_product_category"/>
+      <field name="field_description">Do Not Archive/De-List from Ebay</field>
+      <field name="ttype">boolean</field>
+    </record>
     <record model="ir.model.fields" id="field_sale_order_viewed_tech">
       <field name="name">x_viewed_tech</field>
       <field name="model_id" ref="sale.model_sale_order"/>
@@ -31,6 +37,20 @@
         record['x_viewed'] = True
         record['x_viewed_tech'] = True
         ]]></field>
+    </record>
+    <record model="ir.model.fields" id="field_sales_tax_report_wizard_from">
+      <field name="name">x_date_from</field>
+      <field name="model_id" ref="website_nec.model_sales_tax_report_wizard"/>
+      <field name="field_description">Date From</field>
+      <field name="ttype">datetime</field>
+      <field name="store" eval="True"/>
+    </record>
+    <record model="ir.model.fields" id="field_sales_tax_report_wizard_to">
+      <field name="name">x_date_to</field>
+      <field name="model_id" ref="website_nec.model_sales_tax_report_wizard"/>
+      <field name="field_description">Date To</field>
+      <field name="store" eval="True"/>
+      <field name="ttype">datetime</field>
     </record>
   </data>
 </openerp>
