@@ -14,6 +14,13 @@
       <field name="relation">res.users</field>
       <field name="ttype">many2one</field>
     </record>
+    <record model="ir.model.fields" id="field_sale_order_industry">
+      <field name="name">x_category_id</field>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="field_description">Industry</field>
+      <field name="relation">res.partner.category</field>
+      <field name="ttype">many2many</field>
+    </record>
     <record model="ir.model.fields" id="field_sale_order_viewed">
       <field name="name">x_viewed</field>
       <field name="model_id" ref="sale.model_sale_order"/>

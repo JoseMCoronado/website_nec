@@ -1,4 +1,4 @@
-enable 2 step checkout
+Views to disable:
 disable jdc.product_description
 disable bgu.product_location_category
 disable bgu_product_price_visible
@@ -10,8 +10,10 @@ disable bgu.checkout_removepayment
 diable 	bgu.confirmation_pricevisibility
 
 Manual Changes:
+enable 2 step checkout
 Change default copy for sale.email_template_edi_sale
 Configure terms correctly in jdc.online.quote.terms (reference terms.html)
+remove  <td valign="center" align="right" width="340" style="padding:0px 10px 5px 5px; font-size: 12px;"> from email template notification
 
 EMAIL TEMPLATE
 Thank you for your order.

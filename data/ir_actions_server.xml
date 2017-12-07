@@ -45,5 +45,24 @@ if len(obj.x_user_id) > 0 and len(obj.user_id) == 0:
       <field name="kind">on_write</field>
       <field name="server_action_ids" eval="[(6, 0, [ref('change_salesperson')])]"/>
     </record>
+    <record model="ir.actions.server" id="add_industry">
+      <field name="name">[JDC] Assign industry from addtl info</field>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="sequence">5</field>
+      <field name="state">code</field>
+      <field name="code"><![CDATA[
+if len(obj.x_category_id) > 0:
+  obj.partner_id['category_id'] = [(6,0,obj.x_category_id.ids)]
+        ]]>
+      </field>
+    </record>
+    <record model="base.action.rule" id="auto_add_industry">
+      <field name="name">[JDC] Assign industry from addtl info</field>
+      <field name="active" eval="True"/>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="sequence" eval="2"/>
+      <field name="kind">on_write</field>
+      <field name="server_action_ids" eval="[(6, 0, [ref('add_industry')])]"/>
+    </record>
   </data>
 </openerp>
