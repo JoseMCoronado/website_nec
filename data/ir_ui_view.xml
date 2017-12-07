@@ -237,197 +237,29 @@
                   </label>
                 </div>
                 <div class="col-md-7 col-sm-8">
-                  <div class="o_website_form_flex">
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="107" type="checkbox"/>
-                        <span>
-                          Bakery/Biscuit
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="108" type="checkbox"/>
-                        <span>
-                          Beverage
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="109" type="checkbox"/>
-                        <span>
-                          Boilers &amp; Compressors
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="110" type="checkbox"/>
-                        <span>
-                          Chemical
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="111" type="checkbox"/>
-                        <span>
-                          Coffee
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="112" type="checkbox"/>
-                        <span>
-                          Confectionery
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="113" type="checkbox"/>
-                        <span>
-                          Consultant
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="114" type="checkbox"/>
-                        <span>
-                          Contract Packaging
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="115" type="checkbox"/>
-                        <span>
-                          Cosmetic/Soap
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="116" type="checkbox"/>
-                        <span>
-                          Dairy
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="117" type="checkbox"/>
-                        <span>
-                          Dealers
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="118" type="checkbox"/>
-                        <span>
-                          Food
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="119" type="checkbox"/>
-                        <span>
-                          Nutraceutical
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="120" type="checkbox"/>
-                        <span>
-                          Packaging
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="121" type="checkbox"/>
-                        <span>
-                          Personal Products
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="122" type="checkbox"/>
-                        <span>
-                          Pet Food
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="123" type="checkbox"/>
-                        <span>
-                          Pharmaceutical
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="124" type="checkbox"/>
-                        <span>
-                          Real Estate
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="125" type="checkbox"/>
-                        <span>
-                          Snack
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="126" type="checkbox"/>
-                        <span>
-                          Tea &amp; spice
-
-                        </span>
-                      </label>
-                    </div>
-                    <div class="checkbox o_website_form_flex_item">
-                      <label>
-                        <input class="o_website_form_input" name="x_category_id" value="127" type="checkbox"/>
-                        <span>
-                          Tobacco
-
-                        </span>
-                      </label>
-                    </div>
-                  </div>
+                  <select class="form-control o_website_form_input" name="x_category_id" required="false">
+                    <option value='107'>Bakery/Biscuit</option>
+                    <option value='108'>Beverage</option>
+                    <option value='109'>Boilers &amp; Compressors</option>
+                    <option value='110'>Chemical</option>
+                    <option value='111'>Coffee</option>
+                    <option value='112'>Confectionery</option>
+                    <option value='113'>Consultant</option>
+                    <option value='114'>Contract Packaging</option>
+                    <option value='115'>Cosmetic/Soap</option>
+                    <option value='116'>Dairy</option>
+                    <option value='117'>Dealers</option>
+                    <option value='118'>Food</option>
+                    <option value='119'>Nutraceutical</option>
+                    <option value='120'>Packaging</option>
+                    <option value='121'>Personal Products</option>
+                    <option value='122'>Pet Food</option>
+                    <option value='123'>Pharmaceutical</option>
+                    <option value='124'>Real Estate</option>
+                    <option value='125'>Snack</option>
+                    <option value='126'>Tea &amp; spice</option>
+                    <option value='127'>Tobacco</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">

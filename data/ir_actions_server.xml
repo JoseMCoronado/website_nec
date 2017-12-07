@@ -51,8 +51,8 @@ if len(obj.x_user_id) > 0 and len(obj.user_id) == 0:
       <field name="sequence">5</field>
       <field name="state">code</field>
       <field name="code"><![CDATA[
-if len(obj.x_category_id) > 0:
-  obj.partner_id['category_id'] = [(6,0,obj.x_category_id.ids)]
+if obj.x_category_id:
+    obj.partner_id['category_id'] = [(6,0,[int(obj.x_category_id)])]
         ]]>
       </field>
     </record>
