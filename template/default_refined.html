@@ -1,0 +1,357 @@
+
+% set leases = []
+% set index = 0
+    <table border="0" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <td style="background-color:#083346;font-size:12px;" align="center">
+                    <table border="0" width="100%" align="center">
+                        <tr>
+                            <td align="center" style="font-size:12px;font-family:Tahoma;color:#FFFFFF;">
+                                 Quote from The World's Largest Supplier of Reconditioned and New Processing and Packaging Machinery<br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color:#FFFFFF;" align="center">
+                    <table border="0" width="100%">
+                      <tr>
+                          <td><span style="display:block;height:20px;"</td>
+
+                      </tr>
+                        <tr>
+                            <td>
+                                <div class="row" align="center">
+                                    <a href="http://www.unionmachinery.com/Default.asp?CatID=0" >
+                                      <img src="/website_nec/static/img/eml-Logo-2.png">
+                                    </a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="http://www.unionmachinery.com/Default.asp?CatID=0" target="_blank">
+                                      <img src="/website_nec/static/img/eml-Logo-1.png">
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" colspan="2" style="font-size:16px;font-family:Tahoma;color:#000000;"><b>ESTABLISHED 1912</b></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color:#FFFFFF;" align="center">
+                    <table border="0" width="100%">
+                        <tr>
+                            <td>
+                                <table border="0" width="100%">
+                                    <tbody>
+
+                                        <tr>
+                                            <td align="center" style="font-size:16px;color: #000000;font-family:Tahoma;">
+                                              <a href="http://www.unionmachinery.com/Default.asp?CatID=1" target="_blank">
+                                                <img src="/website_nec/static/img/eml-UsedEquipment.png">
+                                              </a>
+                                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                              <a href="http://www.unionmachinery.com/Default.asp?CatID=357" target="_blank">
+                                                <img src="/website_nec/static/img/eml-NewEquipment.png">
+                                              </a>
+                                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                              <a href="http://www.unionmachinery.com/contactus.asp" target="_blank">
+                                                <img src="/website_nec/static/img/eml-SellUsYourEquipment.png">
+                                              </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span style="display:block;height:10px;"</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color:#083346;" align="center">
+                    <table border="0" width="100%">
+                        <tr>
+                            <td>
+                                <table border="0" width="100%" cellspacing="5">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" >
+                                              <div style="font-size:24px;font-family:Tahoma;color:#FFFFFF;">
+                                                <strong>Quotation</strong> ${object.name}
+                                              </div>
+                                              <div>
+                                                <i><strong>Date: ${format_tz(object.date_order, format='%m/%d/%Y')}</strong></i>
+                                              </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span style="display:block;height:5px;"</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color:#FFFFFF;" align="center">
+
+                </td>
+            </tr>
+            <!-- Products Start-->
+            <tr>
+                <td style="background-color:#FFFFFF;" align="center"><span style="display:block;height:3px;"</td>
+            </tr>
+           % for line in object.order_line:
+           % set index = index + 1
+           % if index % 2 == 0:
+           <tr>
+               <td style="background-color:#2499b7;" align="center">
+                   <table border="0" width="100%">
+                       <tr>
+                           <td>
+                               <table border="0" width="100%">
+                                   <tbody>
+                                       <tr>
+                                          <td  align="right" style="font-size:10pt;font-family:Tahoma;color:#FFFFFF;padding:10px;">
+                                            <table border="0" width="100%">
+                                              <tbody>
+                                                <tr>
+                                                    <td><span style="display:block;height:50px;"</td>
+
+                                                </tr>
+                                                <tr>
+                                                  <div class="row">
+                                                    <div class="col-xs-6 col-xs-offset-6">
+                                                      <strong style="text-align: right;font-size:14pt;font-family:Tahoma;color:#FFFFFF;">${line.product_id.name}</strong>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-xs-8 col-xs-offset-4">
+
+                                                      <p style="text-align: right;">${line.product_id.description_sale}</p>
+
+                                                      <p style="text-align: right;"><a href="http://shop.unionmachinery.com/shop/product/${line.product_tmpl_id.id}" ><img src="/website_nec/static/img/eml-ViewMorePhotos.png"></a></p>
+
+                                                    </div>
+                                                  </div>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                           <td width="50%">
+                                               <table border="0" width="100%">
+                                                   <tbody>
+                                                       <tr>
+                                                           <td><span style="display:block;height:50px;"</td>
+                                                       </tr>
+                                                       <tr>
+                                                           <td align="center">
+                                                               <a href="http://shop.unionmachinery.com/shop/product/${line.product_tmpl_id.id}" target="_blank"><img src="/web/image/product.template/${line.product_tmpl_id.id}/image" width="250" height="250" style="width:250;height:auto !important;"></a>
+                                                           </td>
+                                                       </tr>
+                                                       <tr>
+                                                           <td style="font-size:16px;font-family:Tahoma;color:#FFFFFF;padding:10;" align="center">
+                                                               <b style="font-size:20px;font-family:Tahoma;color:#FFFFFF;">
+                                                                   <strong>Price $${'{:20,.2f}'.format(line.price_unit)}</strong>
+                                                               </b>
+                                                                % if line.x_monthly_payment > 0.0:
+                                                               <br />or *monthly payments of <br /><strong>$${'{:20,.2f}'.format(line.x_monthly_payment)}</strong>
+                                                                % set _ = leases.append(1)
+                                                                % endif
+                                                           </td>
+                                                       </tr>
+                                                   </tbody>
+                                               </table>
+                                           </td>
+
+                                       </tr>
+                                   </tbody>
+                               </table>
+                           </td>
+                       </tr>
+                   </table>
+               </td>
+           </tr>
+           % endif
+           % if index % 2 != 0:
+            <tr>
+                <td style="background-color:#2499b7;" align="center">
+                    <table border="0" width="100%">
+                        <tr>
+                            <td>
+                                <table border="0" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">
+                                                <table border="0" width="100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><span style="display:block;height:50px;"</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center">
+                                                                <a href="http://shop.unionmachinery.com/shop/product/${line.product_tmpl_id.id}" target="_blank"><img src="/web/image/product.template/${line.product_tmpl_id.id}/image" width="250" height="250" style="width:250;height:auto !important;"></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-size:16px;font-family:Tahoma;color:#FFFFFF;padding:10px;" align="center">
+                                                                <b style="font-size:20px;font-family:Tahoma;color:#FFFFFF;">
+                                                                    <strong>Price $${'{:20,.2f}'.format(line.price_unit)}</strong>
+                                                                </b>
+                                                                 % if line.x_monthly_payment > 0.0:
+                                                                <br />or *monthly payments of <br /><strong>$${'{:20,.2f}'.format(line.x_monthly_payment)}</strong>
+                                                                 % set _ = leases.append(1)
+                                                                 % endif
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td width="50%" style="font-size:10pt;font-family:Tahoma;color:#FFFFFF;padding:10px;">
+                                              <table border="0" width="100%">
+                                                <tbody>
+                                                  <tr>
+                                                      <td><span style="display:block;height:50px;"</td>
+
+                                                  </tr>
+                                                  <tr>
+                                                    <div class="row">
+                                                      <div class="col-xs-6">
+                                                        <strong style="font-size:14pt;font-family:Tahoma;color:#FFFFFF;">${line.product_id.name}</strong>
+                                                      </div>
+                                                    </div>
+                                                    <div class="row">
+                                                      <div class="col-xs-8">
+
+                                                        <p style="text-align: left;">${line.product_id.description_sale}</p>
+
+                                                        <p style="text-align: left;"><a href="http://shop.unionmachinery.com/shop/product/${line.product_tmpl_id.id}" ><img src="/website_nec/static/img/eml-ViewMorePhotos.png"></a></p>
+
+                                                      </div>
+                                                    </div>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            % endif
+             % if not loop.last
+             <tr>
+                 <td style="background-color:#FFFFFF;" align="center"><span style="display:block;height:3px;"</td>
+             </tr>
+            %  endif
+             <!-- Products End-->
+             %endfor
+             % if leases:
+            <tr>
+                <td style="background-color:#083346;" align="center">
+                    <table border="0" width="100%">
+                        <tr>
+                            <td>
+                                <table border="0" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" style="font-size:12px;font-family:Tahoma;color:#FFFFFF;padding:10px;">
+                                                *Available to US companies for equipment financing. All applications are subject to final credit approval by Direct Capital. Your payment may differ.
+                                            </td>
+                                            <td align="center" style="font-size:18px;font-family:Tahoma;color:#FFFFFF;padding:10px;">
+                                                Payment Options<br>Available<br/>
+                                                <a href="https://unionstandardequipment1.directcapital.com/" target="_blank"><img src="/website_nec/static/img/eml-dcLogo.png"></a>
+                                            </td>
+                                            <td align="center" style="padding:10px;">
+                                                <a href="https://unionstandardequipment1.directcapital.com/" target="_blank"><img src="/website_nec/static/img/eml-GetStarted.png"></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            % endif
+            % if not leases:
+            <tr>
+                <td style="background-color:#083346;" align="center">
+                    <table border="0" width="100%">
+                        <tr>
+                            <td>
+                                <table border="0" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td><span style="diplay:block;height=100px;"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            % endif
+            <tr>
+                <td style="background-color:#FFFFFF;" align="center"></td>
+            </tr>
+            <tr>
+                <td style="background-color:#FFFFFF;" align="center">
+                    <table border="0" width="100%">
+                        <tr>
+                            <td>
+                                <table border="0" width="100%" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" style="font-size:13px;font-family:Tahoma;color:#000000;">
+                                                <strong>"For 104 years, companies of all sizes located worldwide have turned to Union for their New, Used &amp; Reconditioned Processing, Packaging and Lab Equipment needs."</b>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color:#FFFFFF;" align="center">
+                    <table border="0" width="600">
+                        <tr>
+                            <td>
+                                <table border="0" width="100%" cellpadding="5">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" style="font-size:14px;font-family:Tahoma;color:#000000;">
+                                                Union Standard Equipment<br>
+                                                600 Mamaroneck Ave Suite 400 Harrison, NY 10528<br>
+                                                Phone: 718.585.0200 Fax: 718.313.0806<br>
+                                                <a style="color:#000000" href="http://www.unionmachinery.com/" target="_blank">www.unionmachinery.com</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color:#053346;" align="center"></td>
+            </tr>
+        </tbody>
+    </table>

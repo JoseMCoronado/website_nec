@@ -17,72 +17,145 @@
                       </t>
                   </h2>
 
+                  <t t-set="grand_total_sales" t-value="0"/>
+                  <t t-set="grand_total_untaxable_sales" t-value="0"/>
+                  <t t-set="grand_total_taxable_sales" t-value="0"/>
+                  <t t-set="grand_total_tax" t-value="0"/>
+
                   <div class="row mt32 mb32" id="informations">
                       <div class="col-xs-3">
                           <strong>Report Date:</strong>
                           <p t-esc="datetime.datetime.now().strftime('%m/%d/%Y')"/>
                       </div>
                   </div>
+                  <t t-set="accounts_amounts" t-value="{}"/>
+                  <t t-set="sortedaccounts" t-value="[]"/>
+                  <t t-foreach="docs" t-as="o">
+                     <t>
+                          <t t-set="this_account_amount" t-value="accounts_amounts.get(o.fiscal_position_id.x_county, [''])"/>
+                          <t t-esc="accounts_amounts.update({o.fiscal_position_id.x_county: [o.fiscal_position_id.x_county]})"/>
+                     </t>
+                  </t>
+                  <t t-set="sortedaccounts" t-value="accounts_amounts.keys()"/>
+                  <t t-esc="sortedaccounts.sort()"/>
 
+                  <t t-foreach="sortedaccounts" t-as="county">
+                    <h3><span t-esc="county"/></h3>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th width="5%">Date</th>
+                                <th width="5%">Amt Due</th>
+                                <th width="10%">Inv #</th>
+                                <th width="15%">Tax</th>
+                                <th width="10%">Customer</th>
+                                <th width="15%">Address</th>
+                                <th width="10%">City</th>
+                                <th width="10%">County</th>
+                                <th width="5%">State</th>
+                                <th width="5%" class="text-right">Tax</th>
+                                <th width="5%" class="text-right">Total</th>
+                                <th width="5%" class="text-right">Net Total</th>
+                            </tr>
+                       </thead>
+                       <tbody class="sale_tbody">
+
+                           <t t-set="total_sales" t-value="0"/>
+                           <t t-set="total_untaxable_sales" t-value="0"/>
+                           <t t-set="total_taxable_sales" t-value="0"/>
+                           <t t-set="total_tax" t-value="0"/>
+                           <t t-foreach="docs" t-as="doc">
+                            <t t-if="doc.fiscal_position_id.x_county == county">
+                              <tr>
+                                  <t t-set="total_sales" t-value="total_sales + doc.amount_total"/>
+                                  <t t-if="doc.amount_tax &lt;= 0">
+                                    <t t-set="total_untaxable_sales" t-value="total_untaxable_sales + doc.amount_total"/>
+                                  </t>
+                                  <t t-if="doc.amount_tax &gt; 0">
+                                    <t t-set="total_taxable_sales" t-value="total_taxable_sales + doc.amount_total"/>
+                                  </t>
+                                  <t t-set="total_tax" t-value="total_tax + doc.amount_tax"/>
+                                  <td><span t-field="doc.date"/></td>
+                                  <td><span t-field="doc.residual"/></td>
+                                  <td><span t-field="doc.number"/></td>
+                                  <t t-if="doc.fiscal_position_id and doc.fiscal_position_id.tax_ids and doc.fiscal_position_id.tax_ids[0].tax_dest_id">
+                                    <td><span t-esc="doc.fiscal_position_id.tax_ids[0].tax_dest_id.name"/></td>
+                                  </t>
+                                  <t t-if="not doc.fiscal_position_id or not doc.fiscal_position_id.tax_ids">
+                                    <td><span>N/A</span></td>
+                                  </t>
+                                  <td><span t-field="doc.partner_id.name"/></td>
+                                  <td><span t-field="doc.partner_id.street"/></td>
+                                  <td><span t-field="doc.partner_id.city"/></td>
+                                  <t t-if="doc.fiscal_position_id">
+                                    <td><span t-esc="doc.fiscal_position_id.x_county"/></td>
+                                  </t>
+                                  <t t-if="not doc.fiscal_position_id">
+                                    <td><span>N/A</span></td>
+                                  </t>
+                                  <td><span t-field="doc.partner_id.state_id.code"/></td>
+                                  <td class="text-right"><span t-field="doc.amount_tax"/></td>
+                                  <td class="text-right"><span t-field="doc.amount_total"/></td>
+                                  <td class="text-right"><span t-field="doc.amount_untaxed"/></td>
+                              </tr>
+                            </t>
+                            </t>
+                        </tbody>
+                    </table>
+                    <div class="row" name="total">
+                      <div class="col-xs-4 pull-right">
+                          <table class="table table-condensed">
+                              <tr class="border-black">
+                                  <td><strong>Total Sales</strong></td>
+                                  <td class="text-right">
+                                      <span t-esc="total_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: docs[0].currency_id}"/>
+                                  </td>
+                              </tr>
+                              <tr class="border-black">
+                                  <td><strong>Untaxable Sales</strong></td>
+                                  <td class="text-right">
+                                      <span t-esc="total_untaxable_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: docs[0].currency_id}"/>
+                                  </td>
+                              </tr>
+                              <tr class="border-black">
+                                  <td><strong>Taxable Sales</strong></td>
+                                  <td class="text-right">
+                                    <span t-esc="total_taxable_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: docs[0].currency_id}"/>
+                                  </td>
+                              </tr>
+                              <tr class="border-black">
+                                  <td><strong>Total Tax</strong></td>
+                                  <td class="text-right">
+                                    <span t-esc="total_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: docs[0].currency_id}"/>
+                                  </td>
+                              </tr>
+                          </table>
+                          <t t-set="grand_total_sales" t-value="grand_total_sales+total_sales"/>
+                          <t t-set="grand_total_untaxable_sales" t-value="grand_total_untaxable_sales+total_untaxable_sales"/>
+                          <t t-set="grand_total_taxable_sales" t-value="grand_total_taxable_sales+total_taxable_sales"/>
+                          <t t-set="grand_total_tax" t-value="grand_total_tax+total_tax"/>
+                      </div>
+                  </div>
+                  </t>
+                  <h2>Grand Total</h2>
                   <table class="table table-condensed">
                       <thead>
                           <tr>
-                              <th>Accounting Date</th>
-                              <th>Amount Due</th>
-                              <th>Name</th>
+                              <th>Untaxable Sales</th>
+                              <th>Taxable Sales</th>
+                              <th>Total Sales</th>
                               <th>Tax</th>
-                              <th>Customer</th>
-                              <th>Address</th>
-                              <th>City</th>
-                              <th>State</th>
-                              <th>Invoice Date</th>
-                              <th class="text-right">Tax</th>
-                              <th class="text-right">Total</th>
-                              <th class="text-right">Net Total</th>
-                              <th class="text-right">Total Sales</th>
-                              <th class="text-right">Total Untaxable Sales</th>
-                              <th class="text-right">Total Taxable Sales</th>
-                              <th class="text-right">Total Tax</th>
+                              <th>Net Total</th>
                           </tr>
                      </thead>
                      <tbody class="sale_tbody">
-                         <t t-set="total_sales" t-value="0"/>
-                         <t t-set="total_untaxable_sales" t-value="0"/>
-                         <t t-set="total_taxable_sales" t-value="0"/>
-                         <t t-set="total_tax" t-value="0"/>
-                         <t t-foreach="docs" t-as="doc">
-                            <tr>
-                                <t t-set="total_sales" t-value="total_sales + doc.amount_total"/>
-                                <t t-if="doc.amount_tax &lt;= 0">
-                                  <t t-set="total_untaxable_sales" t-value="total_untaxable_sales + doc.amount_total"/>
-                                </t>
-                                <t t-if="doc.amount_tax &gt; 0">
-                                  <t t-set="total_taxable_sales" t-value="total_taxable_sales + doc.amount_total"/>
-                                </t>
-                                <t t-set="total_tax" t-value="total_tax + doc.amount_tax"/>
-                                <td><span t-field="doc.date"/></td>
-                                <td><span t-field="doc.residual"/></td>
-                                <td><span t-field="doc.number"/></td>
-                                <t t-if="doc.fiscal_position_id and doc.fiscal_position_id.tax_ids and doc.fiscal_position_id.tax_ids[0].tax_dest_id">
-                                  <td><span t-esc="doc.fiscal_position_id.tax_ids[0].tax_dest_id.name"/></td>
-                                </t>
-                                <t t-if="not doc.fiscal_position_id or not doc.fiscal_position_id.tax_ids">
-                                  <td><span>n/A</span></td>
-                                </t>
-                                <td><span t-field="doc.partner_id.name"/></td>
-                                <td><span t-field="doc.partner_id.street"/></td>
-                                <td><span t-field="doc.partner_id.city"/></td>
-                                <td><span t-field="doc.partner_id.state_id.code"/></td>
-                                <td><span t-field="doc.date_invoice"/></td>
-                                <td class="text-right"><span t-field="doc.amount_tax"/></td>
-                                <td class="text-right"><span t-field="doc.amount_untaxed"/></td>
-                                <td class="text-right"><span t-field="doc.amount_total"/></td>
-                                <td class="text-right"><span t-esc="total_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/></td>
-                                <td class="text-right"><span t-esc="total_untaxable_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/></td>
-                                <td class="text-right"><span t-esc="total_taxable_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/></td>
-                                <td class="text-right"><span t-esc="total_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/></td>
-                            </tr>
-                          </t>
+                       <tr>
+                         <td class="text-right"><span t-esc="grand_total_untaxable_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: docs[0].currency_id}"/></td>
+                         <td class="text-right"><span t-esc="grand_total_taxable_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: docs[0].currency_id}"/></td>
+                         <td class="text-right"><span t-esc="grand_total_sales" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: docs[0].currency_id}"/></td>
+                         <td class="text-right"><span t-esc="grand_total_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: docs[0].currency_id}"/></td>
+                         <td class="text-right"><span t-esc="grand_total_sales - grand_total_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: docs[0].currency_id}"/></td>
+                       </tr>
                       </tbody>
                   </table>
                   <div class="oe_structure"/>

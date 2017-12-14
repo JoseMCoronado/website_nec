@@ -42,7 +42,7 @@
               </t>
             </div>
             <div t-if="display_price_user == False">
-              <a href="/web/login"><span>Please sign in to submit request.</span></a>
+              <a t-attf-href="/web/login?redirect=#{ request.httprequest.url }"><span>Please sign in to submit request.</span></a>
             </div>
           </xpath>
           <xpath expr="//form" position="attributes">
@@ -549,7 +549,7 @@
       <field name="sequence">5</field>
       <field name="state">code</field>
       <field name="code"><![CDATA[
-invoice_ids = object.env['account.invoice'].search([('state','in',['open','paid']),('date_invoice','>=',object.x_date_from),('date_invoice','<=',object.x_date_to),('type','in',['out_invoice','out_refund'])])
+invoice_ids = object.env['account.invoice'].search([('state','in',['open','paid']),('date_invoice','>=',object.x_date_from),('date_invoice','<=',object.x_date_to),('type','in',['out_invoice','out_refund']),('fiscal_position_id','!=',False)])
 action = object.env['report'].get_action(invoice_ids, 'website_nec.report_sale_tax')
         ]]>
       </field>
@@ -604,6 +604,18 @@ action = object.env['report'].get_action(invoice_ids, 'website_nec.report_sale_t
       <field name="arch" type="xml">
         <xpath expr="//div[@id='drawsign']" position="replace">
           <div></div>
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_position_form_mod">
+      <field name="name">x_jdc.account.fiscal.position.form.mod</field>
+      <field name="model">account.fiscal.position</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="account.view_account_position_form"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='state_ids']" position="after">
+          <field name="x_county"/>
         </xpath>
       </field>
     </record>

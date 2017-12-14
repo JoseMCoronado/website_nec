@@ -58,5 +58,11 @@
       <field name="store" eval="True"/>
       <field name="ttype">datetime</field>
     </record>
+    <record model="ir.model.fields" id="field_fiscal_position_county">
+      <field name="name">x_county</field>
+      <field name="model_id" ref="account.model_account_fiscal_position"/>
+      <field name="field_description">County</field>
+      <field name="ttype">char</field>
+    </record>
   </data>
 </openerp>

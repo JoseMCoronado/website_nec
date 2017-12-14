@@ -39,13 +39,29 @@ Features:
 -Removed 'Feedback' and 'Reject' buttons on the online quotation
 -Renamed 'Accept' button to 'Accept terms & conditions' on the online quotation
         """,
-    'depends': ['base_import','website_sale','website_quote','sale_ebay','account_accountant'],
+    'depends': ['base_import','website_sale','website_quote','sale_ebay','account_accountant','crm'],
     'data': [
         'data/ir_models.xml',
         'data/ir_model_fields.xml',
         'data/ir_ui_view.xml',
         'data/ir_ui_qweb.xml',
         'data/ir_actions_server.xml',
+    ],
+    'static': [
+        'static/img/eml-Click-to-Register.png',
+        'static/img/eml-dcLogo.png',
+        'static/img/eml-GetStarted.png',
+        'static/img/eml-Logo-1 - bk.png',
+        'static/img/eml-Logo-1.png',
+        'static/img/eml-Logo-2.png',
+        'static/img/eml-NewEquipment.png',
+        'static/img/eml-Register-View-More-Photos.png',
+        'static/img/eml-SellUsYourEquipment.png',
+        'static/img/eml-Since1912.png',
+        'static/img/eml-UsedEquipment.png',
+        'static/img/eml-View-More-Photos.png',
+        'static/img/eml-ViewMorePhotos.png',
+        'static/img/eml-WatchVideo.png',
     ],
     'installable': True,
 }
