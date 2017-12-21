@@ -1,0 +1,22 @@
+% set access_action = object.get_access_action()
+% set doc_name = 'quotation' if object.state in ('draft', 'sent') else 'order confirmation'
+% set is_online = access_action and access_action['type'] == 'ir.actions.act_url'
+% set access_name = is_online and object.template_id and 'Review and Accept Order'
+% set access_url =  '/quote/' + str(object.id)
+
+<p>Dear
+% if object.partner_id.company_type == 'company' and object.child_ids:
+    ${object.partner_id.child_ids[0].name}
+% else :
+    ${object.partner_id.name}
+% endif
+,</p>
+<p>Thank you for your request.<br />
+A salesperson will contact your shortly.
+</p>
+<p>Best regards,</p>
+<p style="color:#eeeeee;">
+% if object.user_id and object.user_id.signature:
+    ${object.user_id.signature | safe}
+% endif
+</p>

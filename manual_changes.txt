@@ -1,0 +1,22 @@
+***VIEWS TO DISABLE***
+disable jdc.product_description
+disable bgu.product_location_category
+disable bgu_product_price_visible
+disable bgu.product_desc_100chars
+disable bgu.shopping_cart_price_visibility
+remove hack from Continue Shopping Button
+disable bgu.removePaymentInfo_PublicUsers
+disable bgu.checkout_removepayment
+diable 	bgu.confirmation_pricevisibility
+
+***MANUAL CHANGES/CONFIGURATIONS***
+Enable 2 Step Check Out
+Disable 'Allow Comments & History' on the online quotation
+Replace the content within the section of 'jdc.online.quote.terms' with the content of 'terms.html'.
+Remove from 'Notification Email' template entire section starting w/ '<td valign="center" align="right" width="340" style="padding:0px 10px 5px 5px; font-size: 12px;">'
+Remove from 'Notification Email' template entire section starting w/ '% if not ctx['is_discussion'] or not len(ctx['actions']) == 0:'
+Copy & Paste 'html_email.html' on the content of the 'Sales Order - Send by Email (HTML)'
+Duplicate 'Sales Order - Send by Email' and name the copy 'Sales Order - Send by Email (3rd Email)'
+Copy & Paste 'third_email.html' on the content of the 'Sales Order - Send by Email (3rd Email)'
+Copy & Paste 'first_email.html' on the content of the 'Sales Order - Send by Email'
+Place the signatures for each one of the users by going to the user preferences.

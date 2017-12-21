@@ -462,7 +462,7 @@
                 <hr class="mt0 mb0"/>
                 <div t-if="order_valid" class="text-center">
                     <input type="hidden" t-att-value="quotation.validity_date" id="validity_date"/>
-                    <div class="mt8" t-if="days_valid &gt; 0">
+                    <div style="display:none" class="mt8" t-if="days_valid &gt; 0">
                         <strong>This offer expires in</strong>
                         <div class="day_counter mt8 mb16">
                             <i class="fa fa-clock-o"/>
@@ -494,7 +494,6 @@
             </div>
           </xpath>
           <xpath expr="//div[@id='quotation_toolbar']/a[@data-target='#modaldecline']" position="replace"/>
-          <xpath expr="//div[@id='quotation_toolbar']/a[@href='#discussion']" position="replace"/>
           <xpath expr="//div[@id='quotation_toolbar']/a[@data-target='#modalaccept'][1]" position="replace">
             <a class="btn btn-success" data-toggle="modal" data-target="#modalaccept" t-if="order_valid and not quotation.require_payment">
                 <i class="fa fa-check"/> Agree to above terms &amp;conditions
@@ -527,20 +526,6 @@
           <xpath expr="//div[@class='modal-footer']//div[@t-if='not acquirers']//button[@type='submit']" position="replace">
             <button type="submit" t-attf-class="btn btn-primary">Agree</button>
           </xpath>
-      </field>
-    </record>
-    <record model="ir.ui.view" id="chatter_mod">
-      <field name="name">x_jdc.chatter.mod</field>
-      <field name="model" eval="False"/>
-      <field name="type">qweb</field>
-      <field name="inherit_id" ref="website_quote.chatter"/>
-      <field name="priority">99</field>
-      <field name="arch" type="xml">
-        <xpath expr="//a[@href='#discussion']" position="replace">
-          <a style="visibility: hidden;" class="btn btn-info" type="submit" href="#discussion">
-              <i class="fa fa-comment"/> Feedback
-          </a>
-        </xpath>
       </field>
     </record>
     <record model="ir.actions.server" id="action_open_tax_report">
@@ -616,6 +601,18 @@ action = object.env['report'].get_action(invoice_ids, 'website_nec.report_sale_t
       <field name="arch" type="xml">
         <xpath expr="//field[@name='state_ids']" position="after">
           <field name="x_county"/>
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="so_quotation_content_mod">
+      <field name="name">x_jdc.so_quotation_content.mod</field>
+      <field name="model" eval="False"/>
+      <field name="type">qweb</field>
+      <field name="inherit_id" ref="website_quote.so_quotation_content"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@t-if='quotation.validity_date']" position="attributes">
+            <attribute name="style">display:none</attribute>
         </xpath>
       </field>
     </record>
